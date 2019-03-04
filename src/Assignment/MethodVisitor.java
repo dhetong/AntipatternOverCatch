@@ -14,9 +14,10 @@ import java.util.*;
 
 public class MethodVisitor extends ASTVisitor {
 	HashSet<MethodDeclaration> MethodList = new HashSet<>();
+	ProjectAST javaAST;
 	
 	public MethodVisitor(IJavaProject javaProject){
-		
+		javaAST = new ProjectAST(javaProject);
 	}
 	/*public boolean visit(MethodDeclaration node) {
 		MethodList.add(node);
@@ -30,6 +31,15 @@ public class MethodVisitor extends ASTVisitor {
 	    
 		return super.visit(node);
 	}*/
+	
+	public boolean visit(MethodDeclaration node) {
+		DependencyMapBuilder(node);
+		return true;
+	}
+	
+	public void DependencyMapBuilder(MethodDeclaration node) {
+		IMethod currentMethod = (IMethod) node.resolveBinding().getJavaElement();
+	}
 	
 	public HashSet<MethodDeclaration> getMethodList(){
 		return MethodList;
